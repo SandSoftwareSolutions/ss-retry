@@ -1,0 +1,43 @@
+{
+  "name": "@sandsoftwaresolutions/retry",
+  "version": "0.1.0",
+  "description": "Retry with growing waits, jitter, a time limit per attempt, cancellation and Retry-After support.",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./src/index.d.ts",
+      "import": "./src/index.js"
+    }
+  },
+  "files": [
+    "src",
+    "README.md",
+    "LICENSE"
+  ],
+  "sideEffects": false,
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "test": "node --test",
+    "pack:check": "npm pack --dry-run"
+  },
+  "keywords": [
+    "retry",
+    "backoff",
+    "jitter",
+    "resilience"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SandSoftwareSolutions/ss-retry.git"
+  },
+  "bugs": {
+    "url": "https://github.com/SandSoftwareSolutions/ss-retry/issues"
+  },
+  "homepage": "https://github.com/SandSoftwareSolutions/ss-retry#readme",
+  "publishConfig": {
+    "access": "public"
+  }
+}
