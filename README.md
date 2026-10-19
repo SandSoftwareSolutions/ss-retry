@@ -32,10 +32,10 @@ const data = await retry(async (attempt, signal) => {
 ## What you get
 
 - **Success returns the value.** After the last attempt a `RetryError` is thrown with `attempts`, `errors` (all of them) and `cause` (the last). With `retries: 0` the original error is thrown as it is.
-- **`StopRetrying`** inside your function stops at once and throws the error you wrapped. `shouldRetry(error, attempt)` can do the same from outside.
-- **Cancel** with `signal`: the wait ends immediately and the promise rejects with the signal's reason.
+- **`StopRetrying`** inside your function stops at once and throws the error you wrapped. `shouldRetry(error, attempt)` can do the same from outside (return false, or throw `StopRetrying`).
+- **Cancel** with `signal`: the wait ends immediately, and so does an attempt that is running (also if it ignores the signal it is given), and the promise rejects with the signal's reason.
 - **Jitter** is "full" by default (anywhere between 0 and the wait), which spreads clients best. Use `"equal"` or `"none"` if you must.
-- **429 and Retry-After.** Give your error a numeric `retryAfterMs` and the wait is at least that long. `retryAfterMs(header)` turns a `Retry-After` value (seconds or a date) into milliseconds.
-- `backoff(attempt, options)` is available on its own.
+- **429 and Retry-After.** Give your error a numeric `retryAfterMs` and the wait is at least that long. `retryAfterMs(header)` turns a `Retry-After` value (whole seconds, or an HTTP date) into milliseconds; anything else gives `undefined`, not 0.
+- `backoff(attempt, options)` is available on its own. Nonsense numbers (NaN, negative, an unknown `jitter`, `timeoutPerAttemptMs: 0`) throw a `RangeError` instead of becoming a 1 ms wait. A wait is at most about 24.8 days (2^31-1 ms), the longest Node can time. `timeoutPerAttemptMs: Infinity` means no timeout.
 
 Only retry what is safe to repeat. A POST that may have succeeded before the connection dropped needs an idempotency key first.
