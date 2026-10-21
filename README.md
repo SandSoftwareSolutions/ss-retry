@@ -10,6 +10,8 @@ Try again, the right way: waits that grow, random spread so many clients do not 
 npm install @sandsoftwaresolutions/retry
 ```
 
+Works with `import` and `require()`, and ships TypeScript types for both.
+
 ## Usage
 
 ```js
